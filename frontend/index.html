@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socio-Economic Grant Prioritization & Capital Allocation Portal | Operations Research</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <!-- Custom Modern Governance CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Governance Navbar -->
+  <nav class="navbar navbar-expand-lg gov-navbar py-3 shadow-sm">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="#">
+        <i class="bi bi-shield-check text-warning fs-4"></i>
+        <div>
+          <span class="fw-bold tracking-tight">Public Endowment & Grant Prioritization Portal</span>
+          <div class="small text-secondary" style="font-size: 0.75rem;">Operations Research Decision Engine (Hamdy A. Taha, Ch 4, 8, 9)</div>
+        </div>
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn btn-warning btn-sm fw-bold px-3 py-2 shadow-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#newGrantModal">
+          <i class="bi bi-plus-circle-fill"></i>
+          <span>Submit New Proposal</span>
+        </button>
+
+        <span class="badge py-2 px-3 rounded-pill" id="apiStatusBadge">
+          <i class="bi bi-arrow-repeat spin"></i> Connecting...
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Workspace -->
+  <div class="container-fluid px-4 py-4">
+
+    <!-- Flash Alert Container for New Submissions -->
+    <div id="newGrantAlertContainer"></div>
+
+    <div class="row g-4">
+
+      <!-- Left Column: Policy Parameters, Budget Sliders & Duality Insights -->
+      <div class="col-lg-4 col-xl-4">
+        <div class="card card-gov h-100 shadow-sm border-0">
+          <div class="card-gov-header p-3 border-bottom d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                <i class="bi bi-sliders2 text-primary"></i> Capital Allocation & Policy Bounds
+              </h6>
+              <small class="text-muted">Dynamic constraints governing OR portfolio selection</small>
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetDefaultProposals()" title="Reset to initial 60 grants">
+              <i class="bi bi-arrow-counterclockwise"></i> Reset
+            </button>
+          </div>
+
+          <div class="card-body p-4">
+
+            <!-- Scenario Presets -->
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">QUICK POLICY SCENARIOS</label>
+              <div class="d-flex flex-wrap gap-1">
+                <button type="button" class="btn btn-outline-dark preset-pill" onclick="applyPreset(15000000, 35, 35, 'Standard')">Standard (₹1.5 Cr, 35% Rural)</button>
+                <button type="button" class="btn btn-outline-dark preset-pill" onclick="applyPreset(8000000, 45, 30, 'Austerity')">Austerity (₹80 L, 45% Rural)</button>
+                <button type="button" class="btn btn-outline-dark preset-pill" onclick="applyPreset(25000000, 35, 40, 'Expansion')">Expansion (₹2.5 Cr, 35% Rural)</button>
+                <button type="button" class="btn btn-outline-dark preset-pill" onclick="applyPreset(12000000, 50, 30, 'Aggressive Rural')">High Equity (₹1.2 Cr, 50% Rural)</button>
+              </div>
+            </div>
+
+            <form id="policyForm" onsubmit="event.preventDefault(); calculateOptimalPortfolio();">
+
+              <!-- Total Budget -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="budgetInput" class="form-label fw-semibold mb-0">Total Grant Budget</label>
+                  <span class="badge bg-primary-subtle text-primary fw-bold" id="budgetValueDisplay">₹1,50,00,000</span>
+                </div>
+                <input type="range" class="form-range" id="budgetRange" min="3000000" max="40000000" step="500000" value="15000000" oninput="syncBudget(this.value)">
+                <div class="input-group input-group-sm mt-1">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" class="form-control" id="budgetInput" min="2000000" max="60000000" step="100000" value="15000000" oninput="syncBudget(this.value)">
+                </div>
+              </div>
+
+              <!-- Rural Equity Floor -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="ruralRange" class="form-label fw-semibold mb-0">Rural Equity Quota (Floor %)</label>
+                  <span class="badge bg-success-subtle text-success fw-bold" id="ruralValueDisplay">35% Minimum</span>
+                </div>
+                <input type="range" class="form-range" id="ruralRange" min="10" max="60" step="5" value="35" oninput="syncRural(this.value)">
+                <small class="text-muted">Guarantees rural/distressed areas receive at least this % of total funding</small>
+              </div>
+
+              <!-- Sector Diversity Cap -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="sectorCapRange" class="form-label fw-semibold mb-0">Sector Allocation Cap (%)</label>
+                  <span class="badge bg-warning-subtle text-warning-emphasis fw-bold" id="sectorCapDisplay">35% Maximum</span>
+                </div>
+                <input type="range" class="form-range" id="sectorCapRange" min="20" max="50" step="5" value="35" oninput="syncSectorCap(this.value)">
+                <small class="text-muted">Prevents any single developmental sector from dominating the fund</small>
+              </div>
+
+              <!-- Goal Programming Priority Profile -->
+              <div class="mb-4">
+                <label for="gpProfileSelect" class="form-label fw-semibold mb-1">Goal Programming Policy Priority</label>
+                <select class="form-select form-select-sm" id="gpProfileSelect" onchange="applyGoalProfile(this.value)">
+                  <option value="balanced" selected>Balanced Policy (Equal Multi-Goal Trade-off)</option>
+                  <option value="impact_first">Impact-First (Maximize Total Social Return)</option>
+                  <option value="equity_first">Equity-First (Aggressive Distressed Area Target)</option>
+                  <option value="budget_strict">Strict Budget Adherence (Zero Overspending)</option>
+                </select>
+              </div>
+
+              <!-- Re-Optimize Button -->
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary fw-semibold py-2 shadow-sm" id="optimizeBtn">
+                  <i class="bi bi-cpu-fill me-1"></i> Re-Calculate Optimal Portfolio (Run Solvers)
+                </button>
+              </div>
+            </form>
+
+            <!-- Duality & Sensitivity Analysis Card (Unit 2 of Syllabus) -->
+            <div class="duality-panel p-3 mt-4">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="bi bi-graph-up-arrow text-success fs-5"></i>
+                <h6 class="mb-0 fw-bold">LP Duality & Marginal Return (Unit 2)</h6>
+              </div>
+              <p class="small text-muted mb-2" style="font-size: 0.8rem;">
+                Continuous LP dual variables & shadow prices (Hamdy A. Taha, Ch 4):
+              </p>
+              <div class="d-flex justify-content-between small py-1 border-bottom border-success-subtle">
+                <span class="text-muted">Budget Shadow Price (<span class="fst-italic">y*<sub>budget</sub></span>):</span>
+                <strong class="text-success" id="dualShadowPriceDisplay">-- pts / ₹1 Lakh</strong>
+              </div>
+              <div class="d-flex justify-content-between small py-1 border-bottom border-success-subtle">
+                <span class="text-muted">Continuous LP Upper Bound:</span>
+                <span class="fw-semibold" id="lpUpperBoundDisplay">-- pts</span>
+              </div>
+              <div class="d-flex justify-content-between small pt-1">
+                <span class="text-muted">Integrality Gap (Cost of Indivisibility):</span>
+                <span class="fw-semibold text-danger" id="integralityGapDisplay">--%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: KPIs, Strategy Selector, Charts & Proposals Table -->
+      <div class="col-lg-8 col-xl-8">
+
+        <!-- Top Row: 4 KPI Tiles -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-tile p-3">
+              <div class="text-muted small fw-semibold text-uppercase">Total Social Impact</div>
+              <div class="fs-4 fw-bold text-primary mt-1" id="kpiTotalImpact">-- pts</div>
+              <small class="text-success fw-semibold" id="kpiUpliftPct">+0.0% vs. Baseline</small>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-tile kpi-teal p-3">
+              <div class="text-muted small fw-semibold text-uppercase">Budget Utilized</div>
+              <div class="fs-4 fw-bold text-dark mt-1" id="kpiBudgetUtilized">₹0.00</div>
+              <small class="text-muted" id="kpiBudgetPct">0.0% of available</small>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-tile kpi-amber p-3">
+              <div class="text-muted small fw-semibold text-uppercase">Funded Proposals</div>
+              <div class="fs-4 fw-bold text-dark mt-1" id="kpiGrantsCount">0 / 60</div>
+              <small class="text-muted" id="kpiBeneficiaries">0 direct lives</small>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-tile kpi-emerald p-3">
+              <div class="text-muted small fw-semibold text-uppercase">Rural Allocation</div>
+              <div class="fs-4 fw-bold text-success mt-1" id="kpiRuralPct">0.0%</div>
+              <small class="badge bg-success-subtle text-success" id="kpiRuralStatus">Quota Compliant</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Strategy Selector Tabs -->
+        <div class="card card-gov mb-4 shadow-sm">
+          <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="small fw-bold text-muted text-uppercase">OR Solver:</span>
+              <div class="btn-group btn-group-sm" role="group">
+                <input type="radio" class="btn-check" name="activeStrategy" id="stratILP" autocomplete="off" checked onchange="switchActiveStrategy('ILP')">
+                <label class="btn btn-outline-primary" for="stratILP">0-1 Integer LP (Taha Ch 9)</label>
+
+                <input type="radio" class="btn-check" name="activeStrategy" id="stratGP" autocomplete="off" onchange="switchActiveStrategy('GP')">
+                <label class="btn btn-outline-primary" for="stratGP">Goal Programming (Taha Ch 8)</label>
+
+                <input type="radio" class="btn-check" name="activeStrategy" id="stratGreedy" autocomplete="off" onchange="switchActiveStrategy('Greedy')">
+                <label class="btn btn-outline-secondary" for="stratGreedy">Greedy Baseline</label>
+              </div>
+            </div>
+            <div class="small text-muted" id="strategyDetailBadge">
+              Technique 1: 0-1 Knapsack with Simplex Branch & Bound
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-7">
+            <div class="card card-gov p-3 h-100 shadow-sm">
+              <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-bar-chart-fill text-primary"></i> 3-Way Comparative Benchmark
+              </h6>
+              <div class="chart-box">
+                <canvas id="strategyComparisonChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="card card-gov p-3 h-100 shadow-sm">
+              <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-pie-chart-fill text-teal"></i> Sectoral Capital Distribution
+              </h6>
+              <div class="chart-box">
+                <canvas id="sectorChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proposals Table with Explicit Priority Ranks & Tiers -->
+        <div class="card card-gov shadow-sm">
+          <div class="card-gov-header p-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+              <h5 class="card-title mb-0 fw-bold">Grant Applications: Explicit Priority Queue (#1 to #N)</h5>
+              <small class="text-muted">Sorted by Normalized Socio-Economic Priority Index</small>
+            </div>
+            
+            <div class="d-flex align-items-center gap-2">
+              <!-- Filter Buttons -->
+              <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-outline-secondary active" id="btnFilterAll" onclick="setFilter('ALL')">All</button>
+                <button type="button" class="btn btn-outline-secondary" id="btnFilterFunded" onclick="setFilter('FUNDED')">Tier 1: Funded</button>
+                <button type="button" class="btn btn-outline-secondary" id="btnFilterWaitlist" onclick="setFilter('WAITLIST')">Tier 2: Waitlist</button>
+              </div>
+
+              <!-- Search Box -->
+              <input type="text" class="form-control form-control-sm" style="max-width: 200px;" id="tableSearchInput" placeholder="Search title or ID..." oninput="filterTable(this.value)">
+            </div>
+          </div>
+
+          <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+              <table class="table table-hover align-middle mb-0 gov-table" id="grantsTable">
+                <thead class="sticky-top">
+                  <tr>
+                    <th class="text-center" style="width: 70px;">Rank</th>
+                    <th>Grant Proposal</th>
+                    <th>Sector</th>
+                    <th>Region</th>
+                    <th class="text-end">Ask (₹)</th>
+                    <th class="text-center">Score (S_i)</th>
+                    <th class="text-center">Priority Tier Status</th>
+                    <th>Recommendation</th>
+                  </tr>
+                </thead>
+                <tbody id="grantsTableBody">
+                  <tr>
+                    <td colspan="8" class="text-center py-5 text-muted">
+                      <i class="bi bi-arrow-repeat spin fs-4"></i>
+                      <div class="mt-2">Computing priority rankings and solving portfolio optimization...</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Submit New Grant Application for Dynamic Evaluation -->
+  <div class="modal fade" id="newGrantModal" tabindex="-1" aria-labelledby="newGrantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="newGrantModalLabel">
+            <i class="bi bi-file-earmark-plus text-warning"></i> Submit New Grant Proposal for Real-Time OR Evaluation
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form id="newGrantForm" onsubmit="event.preventDefault(); submitNewProposal();">
+          <div class="modal-body p-4">
+            <p class="text-muted small mb-3">
+              Enter proposal specifications below. The engine will instantly calculate its composite socio-economic score ($S_i$), determine its global priority rank, and verify whether it receives funding under 0-1 ILP and Goal Programming.
+            </p>
+
+            <div class="row g-3">
+              <!-- Title -->
+              <div class="col-12">
+                <label for="newTitle" class="form-label fw-semibold">Project Title</label>
+                <input type="text" class="form-control" id="newTitle" required placeholder="e.g., Solar Cold Storage for Tribal Organic Farmers">
+              </div>
+
+              <!-- Sector -->
+              <div class="col-md-6">
+                <label for="newSector" class="form-label fw-semibold">Developmental Sector</label>
+                <select class="form-select" id="newSector" required>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Education">Education</option>
+                  <option value="Agriculture & Water" selected>Agriculture & Water</option>
+                  <option value="Clean Energy">Clean Energy</option>
+                  <option value="Rural Infrastructure">Rural Infrastructure</option>
+                  <option value="Women Empowerment">Women Empowerment</option>
+                </select>
+              </div>
+
+              <!-- Region Tier -->
+              <div class="col-md-6">
+                <label for="newRegion" class="form-label fw-semibold">Geographic Classification</label>
+                <select class="form-select" id="newRegion" required>
+                  <option value="Rural/Distressed" selected>Rural / Distressed District (Qualifies for Equity Floor)</option>
+                  <option value="Semi-Urban">Semi-Urban</option>
+                  <option value="Urban">Urban</option>
+                </select>
+              </div>
+
+              <!-- Requested Amount -->
+              <div class="col-md-6">
+                <label for="newAmount" class="form-label fw-semibold">Funding Requested (INR ₹)</label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" class="form-control" id="newAmount" min="50000" max="20000000" step="25000" value="1250000" required>
+                </div>
+              </div>
+
+              <!-- Direct Beneficiaries -->
+              <div class="col-md-6">
+                <label for="newBeneficiaries" class="form-label fw-semibold">Estimated Direct Beneficiaries</label>
+                <input type="number" class="form-control" id="newBeneficiaries" min="10" max="200000" value="4800" required>
+              </div>
+
+              <!-- SROI Ratio -->
+              <div class="col-md-4">
+                <label for="newSroi" class="form-label fw-semibold">SROI Multiplier Ratio</label>
+                <input type="number" class="form-control" id="newSroi" min="0.5" max="10.0" step="0.1" value="4.2" required>
+                <small class="text-muted">Economic return per rupee granted</small>
+              </div>
+
+              <!-- Vulnerability Index -->
+              <div class="col-md-4">
+                <label for="newVuln" class="form-label fw-semibold">Target Vulnerability (0.0 to 1.0)</label>
+                <input type="number" class="form-control" id="newVuln" min="0.1" max="1.0" step="0.05" value="0.85" required>
+                <small class="text-muted">Economic distress index</small>
+              </div>
+
+              <!-- Execution Feasibility -->
+              <div class="col-md-4">
+                <label for="newFeasibility" class="form-label fw-semibold">Feasibility Track Record (0.0 to 1.0)</label>
+                <input type="number" class="form-control" id="newFeasibility" min="0.1" max="1.0" step="0.05" value="0.90" required>
+                <small class="text-muted">NGO completion probability</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-warning fw-bold px-4" id="submitProposalBtn">
+              <i class="bi bi-calculator-fill me-1"></i> Evaluate & Prioritize Proposal
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Frontend Controller Script -->
+  <script src="app.js"></script>
+</body>
+</html>

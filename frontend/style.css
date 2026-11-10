@@ -1,0 +1,169 @@
+/* style.css - Modern Public-Sector & Endowment Governance Theme */
+
+:root {
+  --gov-navy: #0f172a;
+  --gov-slate: #1e293b;
+  --gov-blue: #2563eb;
+  --gov-teal: #0d9488;
+  --gov-emerald: #059669;
+  --gov-amber: #d97706;
+  --gov-red: #dc2626;
+  --gov-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-sub: #475569;
+  --border-light: #e2e8f0;
+}
+
+body {
+  background-color: var(--gov-bg);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Institutional Header Bar */
+.gov-navbar {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-bottom: 2px solid #334155;
+}
+
+.brand-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* Cards & Containers */
+.card-gov {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+}
+
+.card-gov-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+/* KPI metric cards */
+.kpi-tile {
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-top: 4px solid var(--gov-blue);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.kpi-tile.kpi-emerald { border-top-color: var(--gov-emerald); }
+.kpi-tile.kpi-amber { border-top-color: var(--gov-amber); }
+.kpi-tile.kpi-teal { border-top-color: var(--gov-teal); }
+
+/* Priority Tier Badges */
+.badge-tier-1 {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  font-weight: 600;
+}
+
+.badge-tier-2 {
+  background-color: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  font-weight: 600;
+}
+
+.badge-tier-3 {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+/* Status Indicators */
+.badge-connected {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-disconnected {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Preset Buttons */
+.preset-pill {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 20px;
+  transition: all 0.15s ease;
+}
+
+.preset-pill:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Duality Box */
+.duality-panel {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+
+/* Chart Canvas Wrapper */
+.chart-box {
+  position: relative;
+  height: 270px;
+  width: 100%;
+}
+
+/* Rank Circle */
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.rank-top3 {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.rank-normal {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+/* Table */
+.gov-table th {
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #64748b;
+  background-color: #f8fafc;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

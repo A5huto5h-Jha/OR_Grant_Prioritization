@@ -1,0 +1,61 @@
+grant_id,title,sector,region_tier,requested_amount,direct_beneficiaries,sroi_ratio,vulnerability_index,execution_feasibility
+GNT-001,Maternal & Child Primary Care Center in Tribal Belt - Phase 1,Healthcare,Rural/Distressed,3050000.0,61739,3.73,0.728,0.788
+GNT-002,Digital Smart Classrooms for Government Schools - Phase 2,Education,Rural/Distressed,750000.0,14482,4.86,0.963,0.65
+GNT-003,Drip Irrigation & Soil Moisture Sensor Kits for Smallholders - Phase 3,Agriculture & Water,Urban,2100000.0,37136,1.49,0.507,0.77
+GNT-004,Rooftop Solar Electrification for Remote Primary Schools - Phase 1,Clean Energy,Rural/Distressed,3125000.0,30935,3.47,0.975,0.79
+GNT-005,All-Weather Footbridges & Feeder Road Connectivity - Phase 2,Rural Infrastructure,Urban,2300000.0,33719,5.29,0.64,0.893
+GNT-006,"Financial Literacy, Banking Access & Micro-Credit Network - Phase 3",Women Empowerment,Rural/Distressed,625000.0,13267,4.7,0.871,0.9
+GNT-007,Mobile Diagnostic Vans for Remote Villages - Phase 1,Healthcare,Rural/Distressed,1475000.0,13971,4.03,0.853,0.705
+GNT-008,Vocational IT & STEM Skilling for Underprivileged Youth - Phase 2,Education,Urban,2550000.0,62845,5.2,0.568,0.748
+GNT-009,Solar-Powered Decentralized Cold Storage for Farmers - Phase 3,Agriculture & Water,Semi-Urban,1825000.0,44744,3.61,0.656,0.94
+GNT-010,Decentralized Solar Micro-Grids for Off-Grid Hamlets - Phase 1,Clean Energy,Semi-Urban,1125000.0,12555,1.46,0.607,0.768
+GNT-011,Village Solid & Liquid Waste Management Facilities - Phase 2,Rural Infrastructure,Rural/Distressed,400000.0,4181,4.89,0.916,0.672
+GNT-012,Artisan Handloom & Handicraft Fair-Trade Collective - Phase 3,Women Empowerment,Rural/Distressed,675000.0,17089,3.74,0.727,0.761
+GNT-013,Telemedicine Kiosk Network for Chronic Diseases - Phase 1,Healthcare,Semi-Urban,2250000.0,39628,3.34,0.516,0.864
+GNT-014,Girls Secondary School Retention & Scholarship Program - Phase 2,Education,Semi-Urban,1950000.0,40887,1.57,0.693,0.683
+GNT-015,Community Rainwater Harvesting & Groundwater Recharge - Phase 3,Agriculture & Water,Rural/Distressed,925000.0,21959,4.21,0.895,0.692
+GNT-016,Clean Biomass Cookstoves for Rural Households - Phase 1,Clean Energy,Semi-Urban,1900000.0,18599,3.86,0.688,0.914
+GNT-017,Community Flood Shelters & Early Warning Disaster Systems - Phase 2,Rural Infrastructure,Semi-Urban,1200000.0,9526,4.7,0.536,0.918
+GNT-018,Digital Literacy & E-Commerce Training for Rural Women - Phase 3,Women Empowerment,Semi-Urban,2650000.0,63179,1.85,0.548,0.778
+GNT-019,Community Mental Health & Counseling Clinics - Phase 1,Healthcare,Urban,2800000.0,16068,3.59,0.495,0.858
+GNT-020,Community Libraries & Early Childhood Literacy Centers - Phase 2,Education,Rural/Distressed,1050000.0,10615,4.19,0.813,0.669
+GNT-021,Organic Millets Processing & Direct Market Linkages - Phase 3,Agriculture & Water,Rural/Distressed,1050000.0,21708,3.07,0.71,0.833
+GNT-022,Solar-Powered Water Pumping & Purification Plants - Phase 1,Clean Energy,Semi-Urban,500000.0,7147,1.99,0.627,0.946
+GNT-023,Public Sanitation Blocks with Greywater Recycling - Phase 2,Rural Infrastructure,Rural/Distressed,2275000.0,46350,2.89,0.925,0.791
+GNT-024,Community Daycare Centers for Women Agricultural Laborers - Phase 3,Women Empowerment,Urban,1475000.0,33850,4.82,0.446,0.706
+GNT-025,Emergency Ambulance & Trauma Care Network - Phase 1,Healthcare,Rural/Distressed,2025000.0,39135,4.0,0.763,0.844
+GNT-026,Teacher Training & Inclusive Learning for Disabled Children - Phase 2,Education,Rural/Distressed,2325000.0,30448,4.67,0.906,0.713
+GNT-027,Community Seed Banks & Climate Resilient Farming - Phase 3,Agriculture & Water,Semi-Urban,2325000.0,24643,4.75,0.647,0.809
+GNT-028,Waste-to-Bioenergy Digesters for Dairy Co-operatives - Phase 1,Clean Energy,Rural/Distressed,625000.0,15723,4.5,0.795,0.755
+GNT-029,Solar Street Lighting for Village Safety & Mobility - Phase 2,Rural Infrastructure,Semi-Urban,2900000.0,65000,4.03,0.505,0.698
+GNT-030,Micro-Enterprise Incubator for Women Self-Help Groups (SHGs) - Phase 3,Women Empowerment,Urban,2075000.0,12452,4.12,0.352,0.698
+GNT-031,Maternal & Child Primary Care Center in Tribal Belt - Phase 1,Healthcare,Semi-Urban,2325000.0,43845,2.12,0.485,0.798
+GNT-032,Digital Smart Classrooms for Government Schools - Phase 2,Education,Rural/Distressed,1400000.0,29254,4.6,0.859,0.678
+GNT-033,Drip Irrigation & Soil Moisture Sensor Kits for Smallholders - Phase 3,Agriculture & Water,Rural/Distressed,1100000.0,13152,5.91,0.836,0.922
+GNT-034,Rooftop Solar Electrification for Remote Primary Schools - Phase 1,Clean Energy,Rural/Distressed,1350000.0,25326,5.44,0.764,0.8
+GNT-035,All-Weather Footbridges & Feeder Road Connectivity - Phase 2,Rural Infrastructure,Semi-Urban,2550000.0,16416,3.33,0.564,0.915
+GNT-036,"Financial Literacy, Banking Access & Micro-Credit Network - Phase 3",Women Empowerment,Semi-Urban,3075000.0,36217,5.36,0.769,0.906
+GNT-037,Mobile Diagnostic Vans for Remote Villages - Phase 1,Healthcare,Rural/Distressed,1450000.0,32259,3.43,0.811,0.903
+GNT-038,Vocational IT & STEM Skilling for Underprivileged Youth - Phase 2,Education,Urban,550000.0,6934,1.97,0.505,0.913
+GNT-039,Solar-Powered Decentralized Cold Storage for Farmers - Phase 3,Agriculture & Water,Semi-Urban,2325000.0,45990,2.62,0.606,0.727
+GNT-040,Decentralized Solar Micro-Grids for Off-Grid Hamlets - Phase 1,Clean Energy,Semi-Urban,575000.0,3169,4.67,0.675,0.861
+GNT-041,Village Solid & Liquid Waste Management Facilities - Phase 2,Rural Infrastructure,Semi-Urban,2875000.0,35124,3.77,0.612,0.852
+GNT-042,Artisan Handloom & Handicraft Fair-Trade Collective - Phase 3,Women Empowerment,Rural/Distressed,800000.0,22106,4.32,0.709,0.661
+GNT-043,Telemedicine Kiosk Network for Chronic Diseases - Phase 1,Healthcare,Urban,1375000.0,12164,2.28,0.537,0.676
+GNT-044,Girls Secondary School Retention & Scholarship Program - Phase 2,Education,Rural/Distressed,1875000.0,30116,5.88,0.9,0.662
+GNT-045,Community Rainwater Harvesting & Groundwater Recharge - Phase 3,Agriculture & Water,Rural/Distressed,1575000.0,32881,2.0,0.97,0.901
+GNT-046,Clean Biomass Cookstoves for Rural Households - Phase 1,Clean Energy,Semi-Urban,1525000.0,13622,3.21,0.552,0.678
+GNT-047,Community Flood Shelters & Early Warning Disaster Systems - Phase 2,Rural Infrastructure,Rural/Distressed,3025000.0,55152,4.93,0.855,0.834
+GNT-048,Digital Literacy & E-Commerce Training for Rural Women - Phase 3,Women Empowerment,Rural/Distressed,1050000.0,13921,2.39,0.796,0.678
+GNT-049,Community Mental Health & Counseling Clinics - Phase 1,Healthcare,Rural/Distressed,1250000.0,31389,3.84,0.727,0.797
+GNT-050,Community Libraries & Early Childhood Literacy Centers - Phase 2,Education,Rural/Distressed,850000.0,13895,2.1,0.966,0.916
+GNT-051,Organic Millets Processing & Direct Market Linkages - Phase 3,Agriculture & Water,Rural/Distressed,400000.0,11298,5.41,0.884,0.699
+GNT-052,Solar-Powered Water Pumping & Purification Plants - Phase 1,Clean Energy,Rural/Distressed,2175000.0,13123,4.51,0.924,0.853
+GNT-053,Public Sanitation Blocks with Greywater Recycling - Phase 2,Rural Infrastructure,Semi-Urban,725000.0,17223,3.97,0.726,0.845
+GNT-054,Community Daycare Centers for Women Agricultural Laborers - Phase 3,Women Empowerment,Rural/Distressed,1125000.0,11406,4.7,0.72,0.746
+GNT-055,Emergency Ambulance & Trauma Care Network - Phase 1,Healthcare,Urban,425000.0,9863,3.43,0.558,0.755
+GNT-056,Teacher Training & Inclusive Learning for Disabled Children - Phase 2,Education,Urban,450000.0,6886,2.13,0.575,0.892
+GNT-057,Community Seed Banks & Climate Resilient Farming - Phase 3,Agriculture & Water,Urban,1525000.0,21314,2.8,0.629,0.908
+GNT-058,Waste-to-Bioenergy Digesters for Dairy Co-operatives - Phase 1,Clean Energy,Rural/Distressed,2500000.0,51299,3.45,0.85,0.799
+GNT-059,Solar Street Lighting for Village Safety & Mobility - Phase 2,Rural Infrastructure,Rural/Distressed,1200000.0,10234,1.94,0.954,0.677
+GNT-060,Micro-Enterprise Incubator for Women Self-Help Groups (SHGs) - Phase 3,Women Empowerment,Rural/Distressed,3050000.0,65000,3.92,0.723,0.678
